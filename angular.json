@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "pathfinding"
+    }
+  },
+  "defaultProject": "pathfinding",
+  "cli": {
+    "analytics": false
+  }
 }
