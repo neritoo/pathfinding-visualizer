@@ -1,5 +1,13 @@
-<div *ngFor="let row of nodes">
-    <div *ngFor="let node of row">
-        <app-node></app-node>
+<div class="grid">
+    <div *ngFor="let row of nodes; let i = index" style="margin: -5px;">
+        <!--
+        <div *ngFor="let col of row" style="display: inline-block;">
+            <app-node></app-node>
+        </div>
+        -->
+
+        <div *ngFor="let node of row; let c = index" style="display: inline-block;">
+            <app-node></app-node>
+        </div>
     </div>
 </div>

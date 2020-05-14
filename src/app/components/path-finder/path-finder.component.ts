@@ -7,25 +7,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PathFinderComponent implements OnInit {
 
-  nodes: any[];
+  nodes = [];
 
   constructor() { }
 
   ngOnInit(): void {
-    this.componentDidMount();
-    console.log(this.nodes);
-  }
-
-  componentDidMount() {
-    this.nodes = [];
+    const nodes = [];
     for (let row = 0; row < 15; row++) {
       const currentRow = [];
       for (let col = 0; col < 50; col++) {
         currentRow.push([]);
       }
-      this.nodes.push(currentRow);
+      nodes.push(currentRow);
     }
-
+    this.nodes = nodes;
+    console.log(this.nodes);
   }
+
 
 }
