@@ -2,5 +2,14 @@
     width: 25px;
     height: 25px;
     outline: 1px solid grey;
+    margin-top: -5px;
     display: inline-block;
+}
+
+.is-start {
+    background-color: green;
+}
+
+.is-finish {
+    background-color: red;
 }

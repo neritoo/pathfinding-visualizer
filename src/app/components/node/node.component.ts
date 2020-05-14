@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import Node from '../../interfaces/node';
 
 @Component({
   selector: 'app-node',
@@ -6,6 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./node.component.css']
 })
 export class NodeComponent implements OnInit {
+
+
+  @Input() node: Node;
+  isStart = false;
+  isFinish = false;
 
   constructor() { }
 
