@@ -1,7 +1,9 @@
-<div class="grid">
-    <div *ngFor="let row of nodes; let i = index">
-        <div key=i *ngFor="let node of row; let c = index;" style="display: inline-block;">
-            <app-node #node [node]="nodes[i][c]"></app-node>
+<div class="grid" (mousedown)="mouseDown($event)" (mouseup)="mouseUp($event)">
+    <div>
+        <div *ngFor="let row of nodes; let i = index">
+            <div key=i *ngFor="let node of row; let c = index;" style="display: inline-block;">
+                <app-node #node [node]="nodes[i][c]" (dropped)="drop($event)"></app-node>
+            </div>
         </div>
     </div>
 </div>

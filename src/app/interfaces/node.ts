@@ -5,11 +5,15 @@ export default class Node {
     isFinish;
     row;
     col;
+    previousNode;
+    distance;
     constructor(row, col, startNode: Point = null, endNode: Point = null) {
         this.row = row;
         this.col = col;
         this.isStart = this.matches(startNode, {row, col});
         this.isFinish = this.matches(endNode, {row, col});
+        this.previousNode = null;
+        this.distance = 9999999;
     }
 
     matches(point1, point2) {
@@ -21,4 +25,12 @@ export default class Node {
         }
         return false;
       }
+
+      reset(){
+        this.previousNode = false;
+        this.previousNode = null;
+        this.isStart = false;
+        this.isFinish = false;
+        this.distance = 9999999;
+    }
 }

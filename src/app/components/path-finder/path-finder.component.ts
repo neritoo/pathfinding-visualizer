@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
 import Point from '../../interfaces/point';
 import Node from '../../interfaces/node';
+import { MessageService } from '../../services/message.service';
+import { NodeComponent } from '../node/node.component';
 
 @Component({
   selector: 'app-path-finder',
@@ -10,12 +12,17 @@ import Node from '../../interfaces/node';
 export class PathFinderComponent implements OnInit {
   rows: number;
   cols: number;
+  isClicked: boolean = false;
   nodes = [];
   startNode: Point;
   endNode: Point;
+  @ViewChildren('node') myComponents: QueryList<any>;
 
 
-  constructor() {
+  constructor(
+    private ref: ChangeDetectorRef,
+    private messageService: MessageService
+  ) {
     this.CreateNodes();
     this.InitializeStartEndNodes();
   }
@@ -53,6 +60,53 @@ export class PathFinderComponent implements OnInit {
         cols.push(new Node(i, j, this.startNode, this.endNode));
       }
       this.nodes.push(cols);
+    }
+  }
+
+  mouseDown(event: Event) {
+    this.messageService.mouseClicked();
+    //event.preventDefault();
+    event.stopPropagation();
+  }
+
+  mouseUp(event: Event) {
+    this.messageService.mouseRelease();
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  drop(event) {
+    let previousNode: Node = event.previousNode;
+    let newNode: Node = event.newNode;
+    //console.log(previousNode, newNode);
+
+    if(previousNode.isStart && !newNode.isFinish) {
+      console.log('previouse:', previousNode);
+      console.log('new: ', newNode);
+      let {row, col} = previousNode;
+      this.nodes[row][col].isStart = false;
+      previousNode.isStart = false;
+      this.nodes[newNode.row][newNode.col].isStart = true;
+      this.startNode = this.nodes[newNode.row][newNode.col];
+    } else if(previousNode.isFinish && !newNode.isStart) {
+      let {row, col} = previousNode;
+      this.nodes[row][col].isFinish = false;
+      previousNode.isFinish = false;
+      this.nodes[newNode.row][newNode.col].isFinish = true;
+      this.endNode = this.nodes[newNode.row][newNode.col];
+
+
+      this.runChangeDetector();
+    }
+  }
+
+  runChangeDetector(type = 'all', index?) {
+    if (type === 'all') {
+      let toRun = [];
+      this.myComponents.forEach((cmp: NodeComponent) => {
+        toRun.push(cmp.runChangeDetector());
+      });
+      Promise.all(toRun);
     }
   }
 

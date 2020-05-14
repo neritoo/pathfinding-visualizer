@@ -1,6 +1,6 @@
 <div class="node" [ngClass]="{
     'is-start' : node.isStart,
     'is-finish' : node.isFinish
-}">
+}" #nodeel draggable="{{(node.isStart || node.isFinish) ? true : false}}" (dragstart)="dragStart($event)" dropzone="copy" (drop)="mouseUp($event)" (dragenter)="dragCancel($event)" (dragleave)="dragCancel($event)" (dragover)="dragCancel($event)">
 
 </div>
